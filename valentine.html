@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Only For You 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("https://images.unsplash.com/photo-1518199266791-5375a83190b7") center/cover no-repeat;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  width: 350px;
+  position: relative;
+  z-index: 2;
+}
+
+h2 { margin-bottom: 20px; }
+
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background-color: #ff2e75;
+  color: white;
+  font-weight: bold;
+}
+
+#noBtn {
+  background-color: #ddd;
+  position: absolute;
+}
+
+.counter {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.heart-fall {
+  position: fixed;
+  top: -10px;
+  font-size: 22px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="card">
+  <div style="font-size:45px;">💘</div>
+  <h2>✨ SARAH ✨<br>Will you be my Valentine?</h2>
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No</button>
+  <div class="counter">You tried to press "No" <span id="tries">0</span> times 😏</div>
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const music = document.getElementById("music");
+const triesText = document.getElementById("tries");
+
+let tries = 0;
+let yesSize = 16;
+
+// NO runs + counter
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  tries++;
+  triesText.innerText = tries;
+
+  yesSize += 5;
+  yesBtn.style.fontSize = yesSize + "px";
+});
+
+// YES click
+yesBtn.addEventListener("click", () => {
+  music.play();
+  document.body.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#ffd6e8;font-family:Arial;flex-direction:column;text-align:center;">
+      <h1 style="font-size:45px;">SHE SAID YES 💖</h1>
+      <h2>This is officially our movie moment 🎬✨</h2>
+      <p style="font-size:18px;">Best choice of the year 😎</p>
+    </div>
+  `;
+});
+
+// Falling hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart-fall");
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 5000);
+}
+setInterval(createHeart, 250);
+</script>
+
+</body>
+</html>
